@@ -15,7 +15,7 @@ const Products = ({products}) => {
                  <h3>{data.title.split(" ")[0]}</h3> 
             <h4 className='description'>{data.title}</h4> 
             <h4>Cost: ${data.price}</h4> 
-            <button onClick={()=>dispatch(ADDITEM(data))}><Link to='/cart' >Add to cart</Link></button>
+            <Link to='/cart' ><button onClick={()=>dispatch(ADDITEM(data))}>Add to cart</button></Link>
             </div>
             </div>
                 )

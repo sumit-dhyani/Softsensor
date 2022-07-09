@@ -1,5 +1,5 @@
 
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useMemo, useReducer, useState } from 'react';
 import './App.css';
 import Navbar from './Components/Navbar';
 
@@ -13,6 +13,7 @@ function reducer(state,action){
       return {...state,loading:false}
     case "OFFSET":
       return {...state,offset:state.offset+3}
+    
     default:
       return state
   }
@@ -26,21 +27,26 @@ function App() {
       dispatch({type:"SETDATA",payload:response})
       dispatch({type:"TOGGLE"})
       
+      
     })
     .catch(err=>console.log(err))
     window.addEventListener("scroll",handlescroll)
   },[])
   useEffect(()=>{
     setfilteredProds(state.data.slice(0,state.offset))
-  },[state.data,state])
+  },[state.data,state.offset])
+  
   const handlescroll=(e)=>{
     if(window.innerHeight+e.target.documentElement.scrollTop+1>=e.target.documentElement.scrollHeight){
+      console.log("ran again")
       
       dispatch({type:"OFFSET"})
+      
       
     }
     
   }
+ 
   return (<>
     <Navbar />
     <div className='container' >
