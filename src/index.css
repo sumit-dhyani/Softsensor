@@ -178,13 +178,33 @@ footer{
   width: 60%;
   margin:0 10px;
 }
+.desc div{
+  display: flex;
+  align-items: center;
+}
+select{
+  border-radius: 5px;
+}
+.desc div a{
+  margin-left:2%;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 2px;
+  color: #007185!important;
+}
+.br{
+  border-right: 1px solid #007185;
+  height:15px;
+  width:30px;
+  
+}
 .items-incart img{
   width: 180px;
   height:180px;
 }
-.items-incart h4{
+/* .items-incart h4{
   margin-left: auto;
-}
+} */
 .checkout{
   display: flex;
   flex-direction: column;

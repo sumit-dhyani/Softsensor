@@ -1,16 +1,15 @@
 import React, { useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 
 const Cart = () => {
     const state=useSelector(state=>state.cart)
+    const dispatch=useDispatch()
     const [items,setitems]=useState([])
-    
+    const arr=[1,2,3,4,5,6,7,8,9,10]
     const calc=(data)=>{
-        // let count=0;
-        // state.map(prod=>prod.id==id?count+=1:null)
-        // return count;
+        
         if (data.quantity){
             return data.quantity;
         }
@@ -20,15 +19,18 @@ const Cart = () => {
     }
     function total(){
         let total=0;
+        let count=0
         state.map(prod=>{
             if(prod.quantity){
                 total+=prod.quantity*prod.price;
+                count+=prod.quantity
             }
             else{
                 total+=prod.price
+                count+=1
             }
         })
-        return `(${state.length} items): $${total.toFixed(2)}`;
+        return `(${count} items): $${total.toFixed(2)}`;
     }
     useMemo(()=>{
         return total
@@ -51,7 +53,18 @@ const Cart = () => {
                                         <img src={prod.image} alt={prod.image}></img>
                                             <div className='desc'>
                                                 <h3>{prod.description}</h3>
-                                                <h4>Qty:{calc(prod)}</h4>
+                                                <div>
+                                                    <h4 className=''>Qty:</h4>
+                                                    <select onChange={(e)=>dispatch({type:"INCREASEQTY",payload:[prod,e.target.value]})} value={calc(prod)}>
+                                                        {arr.map(count=>{
+                                                            return(
+                                                                <option key={count}>{count}</option>
+                                                            )
+                                                        })}
+                                                    </select>
+                                                <div className='br'></div>
+                                                <a onClick={()=>dispatch({type:"REMOVE",payload:prod})}>Delete</a>
+                                                </div>
                                             </div>
                                         <h4>${prod.price}</h4>
                                     </div>
@@ -60,7 +73,7 @@ const Cart = () => {
                             })
                             
                         }
-                    <Link to="/"> <span onClick={()=>setitems([])} className='back'>◄ Continue Shopping</span></Link>
+                    <Link to="/"> <span  className='back'>◄ Continue Shopping</span></Link>
                 </div>
                 
             </div> 

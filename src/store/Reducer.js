@@ -23,8 +23,20 @@ export default function reducer(state=initialstate,action){
 
             return {...state,cart:[...state.cart,action.payload]}
         }
-    case 'SETDATA':
-        return {...state,data:action.payload}
+    case 'REMOVE':
+        let newa=state.cart.filter((prod)=>prod.id!==action.payload.id)
+        console.log(newa)
+        return {...state,cart:newa}
+    case "INCREASEQTY":
+        let newar=state.cart.map(prod=>{
+            if(prod.id===action.payload[0].id){
+                return {...prod,quantity:parseInt(action.payload[1])}
+            }
+            else{
+                return prod;
+            }
+        })
+        return {...state,cart:newar}
     default:
       return state
   }
