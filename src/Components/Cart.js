@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
@@ -6,20 +6,29 @@ import Navbar from './Navbar';
 const Cart = () => {
     const state=useSelector(state=>state.cart)
     const [items,setitems]=useState([])
-    // useEffect(()=>{
-    //     return function(){
-    //         setitems([])
-    //     }
-    // },[])
-    const calc=(id)=>{
-        let count=0;
-        state.map(prod=>prod.id==id?count+=1:null)
-        return count;
+    
+    const calc=(data)=>{
+        // let count=0;
+        // state.map(prod=>prod.id==id?count+=1:null)
+        // return count;
+        if (data.quantity){
+            return data.quantity;
+        }
+        else{
+            return 1;
+        }
     }
     function total(){
         let total=0;
-        state.map(prod=>total+=prod.price)
-        return total;
+        state.map(prod=>{
+            if(prod.quantity){
+                total+=prod.quantity*prod.price;
+            }
+            else{
+                total+=prod.price
+            }
+        })
+        return `(${state.length} items): $${total.toFixed(2)}`;
     }
     useMemo(()=>{
         return total
@@ -30,25 +39,19 @@ const Cart = () => {
         <div className='cart'>
            <div className='items'>
                 <div className='shoppingcart-box'>
-                    <div className='title'>
+                    <div className='title bd'>
                         <h2>Shopping Cart</h2>
                         <h5>Price</h5>
                     </div>
                     
-                        {
+                        {   state&&
                             state.map(prod=>{
-                                // if (prod.id in items){
-                                //     console.log("already in cart")
-                                //     return <></>
-                                // }
-                                // else{
-                                // setitems(prev=>[...prev,prod.id])
                                 return(
-                                    <div key={prod.id} className='items-incart'>
+                                    <div key={prod.id} className='items-incart bd'>
                                         <img src={prod.image} alt={prod.image}></img>
                                             <div className='desc'>
                                                 <h3>{prod.description}</h3>
-                                                <h4>Qty:{calc(prod.id)}</h4>
+                                                <h4>Qty:{calc(prod)}</h4>
                                             </div>
                                         <h4>${prod.price}</h4>
                                     </div>
@@ -62,8 +65,8 @@ const Cart = () => {
                 
             </div> 
             <div className='checkout'>
-            <h2>Subtotal: $ {total()}</h2>
-                    <button>Proceed to buy</button>
+                    <h2>Subtotal {total()}</h2>
+                    <button className='button'>Proceed to buy</button>
             </div>
         </div>
         </>

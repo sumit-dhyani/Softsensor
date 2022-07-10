@@ -14,7 +14,6 @@ import {
 
 import store from './store/Store';
 import Cart from './Components/Cart';
-import Navbar from './Components/Navbar';
 export default function Index(){
   return(
     <React.StrictMode>

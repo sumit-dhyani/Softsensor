@@ -23,19 +23,22 @@ function App() {
   const [filteredProds,setfilteredProds]=useState([])
   useEffect(()=>{
     
-    fetch('http://localhost:3030/').then(data=>data.json()).then(response=>{
-      dispatch({type:"SETDATA",payload:response})
-      dispatch({type:"TOGGLE"})
-      
-      
-    })
-    .catch(err=>console.log(err))
+    fetchapi()
     window.addEventListener("scroll",handlescroll)
   },[])
   useEffect(()=>{
     setfilteredProds(state.data.slice(0,state.offset))
   },[state.data,state.offset])
   
+  const fetchapi=()=>{
+    fetch('https://apisoftsens.herokuapp.com/').then(data=>data.json()).then(response=>{
+      dispatch({type:"SETDATA",payload:response})
+      dispatch({type:"TOGGLE"})
+      
+      
+    })
+    .catch(err=>console.log(err))
+  }
   const handlescroll=(e)=>{
     if(window.innerHeight+e.target.documentElement.scrollTop+1>=e.target.documentElement.scrollHeight){
       console.log("ran again")
