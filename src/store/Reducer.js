@@ -1,6 +1,14 @@
-const initialstate={cart:[],data:[]}
+const initialstate={cart:[],data:[],loading:true,offset:6}
 export default function reducer(state=initialstate,action){
   switch(action.type){
+    case "SETDATA":
+      return {...state,data:action.payload}
+    case "TOGGLE":
+              return {...state,loading:false}
+    case "OFFSET":
+              return {...state,offset:state.offset+3}
+    case "RESETOFFSET":
+            return {...state,offset:6}
     case "ADDITEM":
         let already=false;
         console.log(action.payload)

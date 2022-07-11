@@ -1,1 +1,7 @@
 export const ADDITEM=(item)=>({type:"ADDITEM",payload: item})
+export const OFFSET=()=>({type:'OFFSET'})
+export const SETDATA=(item)=>({type:"SETDATA",payload:item})
+export const TOGGLE=()=>({type:"TOGGLE"})
+export const RESETOFFSET=()=>({type:"RESETOFFSET"})
+export const INCREASEQTY=(prod,value)=>({type:"INCREASEQTY",payload:[prod,value]})
+export const REMOVE=(value)=>({type:"REMOVE",payload:value})

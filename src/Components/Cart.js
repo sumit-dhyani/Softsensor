@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { INCREASEQTY, REMOVE } from '../store/actions';
 import Navbar from './Navbar';
 
 const Cart = () => {
     const state=useSelector(state=>state.cart)
     const dispatch=useDispatch()
-    const [items,setitems]=useState([])
     const arr=[1,2,3,4,5,6,7,8,9,10]
     const calc=(data)=>{
         
@@ -55,7 +55,7 @@ const Cart = () => {
                                                 <h3>{prod.description}</h3>
                                                 <div>
                                                     <h4 className=''>Qty:</h4>
-                                                    <select onChange={(e)=>dispatch({type:"INCREASEQTY",payload:[prod,e.target.value]})} value={calc(prod)}>
+                                                    <select onChange={(e)=>dispatch(INCREASEQTY(prod,e.target.value))} value={calc(prod)}>
                                                         {arr.map(count=>{
                                                             return(
                                                                 <option key={count}>{count}</option>
@@ -63,7 +63,7 @@ const Cart = () => {
                                                         })}
                                                     </select>
                                                 <div className='br'></div>
-                                                <a onClick={()=>dispatch({type:"REMOVE",payload:prod})}>Delete</a>
+                                                <a onClick={()=>dispatch(REMOVE(prod))}>Delete</a>
                                                 </div>
                                             </div>
                                         <h4>${prod.price}</h4>
